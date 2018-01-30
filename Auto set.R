@@ -5,20 +5,18 @@ library(dplyr)
 library(car)
 library(stats) 
 library(knitr)
-library(printr)
 
 
 #Import Data
 auto = Auto
 
 #Explore Data
-str(Auto)
-summary(Auto)
-colnames(Auto)
+str(auto)
+summary(auto)
+colnames(auto)
 head(auto, n=10)
-#Clean Data
-auto = select(auto, mpg, cylinders, displacement, horsepower, weight, acceleration, year)
-head(auto, n = 10)
+
+
 #Explore Data
 plot(auto)
 #Relationship between mpg and displacement, horsepower, weight, year
@@ -32,7 +30,7 @@ summary(autoModel1)
 
 #Determine coliniarity 
 fitvif <- lm(mpg ~ cylinders+displacement+horsepower+weight+acceleration+year, data = auto)
-kable(vif(fitvif),align = 'c')
+show(vif(fitvif))
 #displacement has the highest VIF (above ~10)
 
 #variable selection
@@ -58,10 +56,12 @@ summary(finalfit)$coef
 
 #detect colliniarity 
 fitvif <- lm(mpg ~ weight+year, data = auto)
-kable(vif(fitvif),align = 'c')
+show(vif(fitvif))
 #we are okay ( no values above ~10)
+
 
 #residual plot
 par(mfrow=c(2,2))
 plot(fitvif)
 #The visibility of a distinct pattern in our residual plot indicates that further transformation can be done on our dataset.
+
